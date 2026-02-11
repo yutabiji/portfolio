@@ -1,0 +1,32 @@
+works:
+  - title: "映画「青空の向こう側」"
+    year: 2025
+    role: "主演：佐藤 翼 役"
+    category: "Movie"
+    director: "田中 一郎"
+  - title: "ドラマ「夜明けのカフェ」"
+    year: 2025
+    role: "準主演：高橋 蓮 役"
+    category: "TV"
+  - title: "舞台「夏の夜の夢」"
+    year: 2024
+    role: "パック 役"
+    category: "Stage"
+    director: "鈴木 花子"
+  - title: "映画「風の記憶」"
+    year: 2024
+    role: "木村 大地 役"
+    category: "Movie"
+  - title: "ドラマ「街角のメロディ」"
+    year: 2023
+    role: "ゲスト：中村 光 役"
+    category: "TV"
+  - title: "CM「サンライズビール」"
+    year: 2023
+    role: "出演"
+    category: "CM"
+  - title: "舞台「ロミオとジュリエット」"
+    year: 2022
+    role: "ロミオ 役"
+    category: "Stage"
+    director: "佐々木 誠"

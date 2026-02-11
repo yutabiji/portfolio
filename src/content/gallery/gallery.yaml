@@ -1,0 +1,10 @@
+images:
+  - src: "/images/photo-01.jpg"
+    alt: "宣材写真"
+    category: "宣材写真"
+  - src: "/images/photo-02.jpg"
+    alt: "舞台写真"
+    category: "舞台"
+  - src: "/images/photo-03.jpg"
+    alt: "撮影風景"
+    category: "撮影"

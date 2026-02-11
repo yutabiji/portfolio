@@ -1,0 +1,86 @@
+---
+const currentPath = Astro.url.pathname;
+const base = '/portfolio';
+
+const navItems = [
+  { label: 'Home', href: `${base}/` },
+  { label: 'Profile', href: `${base}/profile/` },
+  { label: 'Works', href: `${base}/works/` },
+  { label: 'Gallery', href: `${base}/gallery/` },
+  { label: 'Contact', href: `${base}/contact/` },
+];
+
+function isActive(href: string): boolean {
+  if (href === `${base}/`) {
+    return currentPath === `${base}/` || currentPath === `${base}`;
+  }
+  return currentPath.startsWith(href);
+}
+---
+
+<header class="bg-white/80 backdrop-blur-sm border-b border-stone-200 sticky top-0 z-50">
+  <nav class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
+    <a href={`${base}/`} class="text-xl font-bold tracking-wide text-stone-900 hover:text-stone-600 transition-colors">
+      Taro Yamada
+    </a>
+
+    <!-- Mobile menu button -->
+    <button
+      id="menu-toggle"
+      class="md:hidden p-2 text-stone-600 hover:text-stone-900"
+      aria-label="メニューを開く"
+    >
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+
+    <!-- Desktop nav -->
+    <ul class="hidden md:flex gap-8">
+      {navItems.map((item) => (
+        <li>
+          <a
+            href={item.href}
+            class:list={[
+              'text-sm tracking-wider uppercase transition-colors',
+              isActive(item.href)
+                ? 'text-stone-900 font-semibold'
+                : 'text-stone-500 hover:text-stone-900',
+            ]}
+          >
+            {item.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+
+  <!-- Mobile nav -->
+  <div id="mobile-menu" class="hidden md:hidden border-t border-stone-200">
+    <ul class="flex flex-col px-4 py-2">
+      {navItems.map((item) => (
+        <li>
+          <a
+            href={item.href}
+            class:list={[
+              'block py-3 text-sm tracking-wider uppercase transition-colors',
+              isActive(item.href)
+                ? 'text-stone-900 font-semibold'
+                : 'text-stone-500 hover:text-stone-900',
+            ]}
+          >
+            {item.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById('menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+  toggle?.addEventListener('click', () => {
+    menu?.classList.toggle('hidden');
+  });
+</script>

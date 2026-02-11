@@ -1,0 +1,100 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionTitle from '../components/SectionTitle.astro';
+import { getCollection } from 'astro:content';
+
+const worksData = await getCollection('works');
+const allWorks = worksData[0]?.data.works ?? [];
+
+const categories = ['All', ...new Set(allWorks.map((w) => w.category))];
+
+// Group by year
+const worksByYear = allWorks.reduce<Record<number, typeof allWorks>>((acc, work) => {
+  if (!acc[work.year]) acc[work.year] = [];
+  acc[work.year].push(work);
+  return acc;
+}, {});
+
+const sortedYears = Object.keys(worksByYear)
+  .map(Number)
+  .sort((a, b) => b - a);
+---
+
+<BaseLayout title="Works" description="出演実績一覧">
+  <section class="max-w-5xl mx-auto px-4 py-20">
+    <SectionTitle title="Works" subtitle="出演実績" />
+
+    <!-- Category Filter -->
+    <div class="flex flex-wrap gap-3 justify-center mb-12">
+      {categories.map((cat) => (
+        <button
+          data-filter={cat}
+          class:list={[
+            'filter-btn px-4 py-2 text-xs tracking-wider uppercase border transition-colors',
+            cat === 'All'
+              ? 'bg-stone-900 text-white border-stone-900'
+              : 'bg-white text-stone-600 border-stone-300 hover:border-stone-900 hover:text-stone-900',
+          ]}
+        >
+          {cat}
+        </button>
+      ))}
+    </div>
+
+    <!-- Works Timeline -->
+    <div id="works-list">
+      {sortedYears.map((year) => (
+        <div class="mb-12">
+          <h3 class="text-2xl font-bold text-stone-300 mb-6">{year}</h3>
+          <div class="space-y-4">
+            {worksByYear[year].map((work) => (
+              <div
+                class="work-item flex items-start gap-4 p-4 bg-white border border-stone-200 hover:shadow-sm transition-shadow"
+                data-category={work.category}
+              >
+                <span class="shrink-0 px-3 py-1 text-xs font-semibold tracking-wider uppercase bg-stone-100 text-stone-500">
+                  {work.category}
+                </span>
+                <div>
+                  <h4 class="font-bold text-stone-900">{work.title}</h4>
+                  <p class="text-sm text-stone-600 mt-1">{work.role}</p>
+                  {work.director && (
+                    <p class="text-xs text-stone-400 mt-1">演出：{work.director}</p>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const buttons = document.querySelectorAll('.filter-btn');
+  const items = document.querySelectorAll('.work-item');
+
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const filter = btn.getAttribute('data-filter');
+
+      // Update active button
+      buttons.forEach((b) => {
+        b.classList.remove('bg-stone-900', 'text-white', 'border-stone-900');
+        b.classList.add('bg-white', 'text-stone-600', 'border-stone-300');
+      });
+      btn.classList.remove('bg-white', 'text-stone-600', 'border-stone-300');
+      btn.classList.add('bg-stone-900', 'text-white', 'border-stone-900');
+
+      // Filter items
+      items.forEach((item) => {
+        if (filter === 'All' || item.getAttribute('data-category') === filter) {
+          (item as HTMLElement).style.display = '';
+        } else {
+          (item as HTMLElement).style.display = 'none';
+        }
+      });
+    });
+  });
+</script>

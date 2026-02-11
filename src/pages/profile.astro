@@ -1,0 +1,103 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionTitle from '../components/SectionTitle.astro';
+import { getCollection, render } from 'astro:content';
+
+const profileEntries = await getCollection('profile');
+const profileEntry = profileEntries[0];
+const { data } = profileEntry;
+const { Content } = await render(profileEntry);
+---
+
+<BaseLayout title="Profile" description={`${data.name}のプロフィール`}>
+  <section class="max-w-5xl mx-auto px-4 py-20">
+    <SectionTitle title="Profile" subtitle="プロフィール" />
+
+    <div class="grid md:grid-cols-3 gap-12">
+      <!-- Photo -->
+      <div class="md:col-span-1">
+        <div class="aspect-[3/4] bg-stone-200 flex items-center justify-center text-stone-400">
+          {data.photo ? (
+            <img src={`/portfolio${data.photo}`} alt={data.name} class="w-full h-full object-cover" />
+          ) : (
+            <span class="text-sm">Photo</span>
+          )}
+        </div>
+      </div>
+
+      <!-- Info -->
+      <div class="md:col-span-2">
+        <h3 class="text-3xl font-bold text-stone-900 mb-1">{data.name}</h3>
+        {data.nameEn && (
+          <p class="text-sm text-stone-400 tracking-wider mb-6">{data.nameEn}</p>
+        )}
+
+        <table class="w-full text-sm mb-8">
+          <tbody>
+            {data.birthday && (
+              <tr class="border-b border-stone-100">
+                <td class="py-3 text-stone-400 w-32">生年月日</td>
+                <td class="py-3 text-stone-800">{data.birthday}</td>
+              </tr>
+            )}
+            {data.birthplace && (
+              <tr class="border-b border-stone-100">
+                <td class="py-3 text-stone-400 w-32">出身</td>
+                <td class="py-3 text-stone-800">{data.birthplace}</td>
+              </tr>
+            )}
+            {data.height && (
+              <tr class="border-b border-stone-100">
+                <td class="py-3 text-stone-400 w-32">身長</td>
+                <td class="py-3 text-stone-800">{data.height}</td>
+              </tr>
+            )}
+            {data.bloodType && (
+              <tr class="border-b border-stone-100">
+                <td class="py-3 text-stone-400 w-32">血液型</td>
+                <td class="py-3 text-stone-800">{data.bloodType}</td>
+              </tr>
+            )}
+            {data.agency && (
+              <tr class="border-b border-stone-100">
+                <td class="py-3 text-stone-400 w-32">所属</td>
+                <td class="py-3 text-stone-800">
+                  {data.agencyUrl ? (
+                    <a href={data.agencyUrl} target="_blank" rel="noopener noreferrer" class="underline hover:text-stone-600">
+                      {data.agency}
+                    </a>
+                  ) : (
+                    data.agency
+                  )}
+                </td>
+              </tr>
+            )}
+            {data.skills && data.skills.length > 0 && (
+              <tr class="border-b border-stone-100">
+                <td class="py-3 text-stone-400 w-32">特技</td>
+                <td class="py-3 text-stone-800">{data.skills.join('、')}</td>
+              </tr>
+            )}
+            {data.qualifications && data.qualifications.length > 0 && (
+              <tr class="border-b border-stone-100">
+                <td class="py-3 text-stone-400 w-32">資格</td>
+                <td class="py-3 text-stone-800">{data.qualifications.join('、')}</td>
+              </tr>
+            )}
+            {data.hobbies && data.hobbies.length > 0 && (
+              <tr class="border-b border-stone-100">
+                <td class="py-3 text-stone-400 w-32">趣味</td>
+                <td class="py-3 text-stone-800">{data.hobbies.join('、')}</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+
+        <!-- Bio from markdown body -->
+        <div class="prose prose-stone max-w-none">
+          <Content />
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
