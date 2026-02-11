@@ -1,0 +1,298 @@
+---
+import PrintLayout from '../layouts/PrintLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+const profileEntries = await getCollection('profile');
+const profileEntry = profileEntries[0];
+const { data: profile } = profileEntry;
+
+const worksData = await getCollection('works');
+const allWorks = worksData[0]?.data.works ?? [];
+
+const galleryData = await getCollection('gallery');
+const allImages = galleryData[0]?.data.images ?? [];
+
+const categoryLabels: Record<string, string> = {
+  Movie: '映画',
+  TV: 'テレビ',
+  Stage: '舞台',
+  CM: 'CM',
+  Other: 'その他',
+};
+
+const categoryOrder = ['Movie', 'TV', 'Stage', 'CM', 'Other'];
+
+const worksByCategory = allWorks.reduce<Record<string, typeof allWorks>>((acc, work) => {
+  if (!acc[work.category]) acc[work.category] = [];
+  acc[work.category].push(work);
+  return acc;
+}, {});
+---
+
+<PrintLayout title={`${profile.name} プロフィールシート`}>
+  <!-- Print button (hidden when printing) -->
+  <div class="no-print fixed top-4 right-4 z-50 flex gap-3">
+    <button
+      onclick="window.print()"
+      class="px-6 py-3 bg-stone-900 text-white text-sm font-semibold tracking-wider hover:bg-stone-700 transition-colors shadow-lg cursor-pointer"
+    >
+      PDF出力
+    </button>
+    <a
+      href="/portfolio/profile/"
+      class="px-6 py-3 bg-white text-stone-600 text-sm font-semibold tracking-wider border border-stone-300 hover:border-stone-900 hover:text-stone-900 transition-colors shadow-lg"
+    >
+      戻る
+    </a>
+  </div>
+
+  <!-- Page 1: Profile + Works -->
+  <div class="max-w-[210mm] mx-auto px-6 py-8 print:max-w-none print:px-0 print:py-0">
+    <!-- Header -->
+    <div class="flex justify-between items-baseline border-b-2 border-stone-800 pb-3 mb-6">
+      <h1 class="text-2xl font-bold tracking-wide">{profile.name}</h1>
+      {profile.agency && (
+        <span class="text-sm text-stone-500">{profile.agency}</span>
+      )}
+    </div>
+
+    <!-- Profile section -->
+    <div class="flex gap-6 mb-8">
+      <!-- Photo -->
+      <div class="shrink-0 w-36">
+        <div class="aspect-[3/4] bg-stone-200 flex items-center justify-center text-stone-400">
+          {profile.photo ? (
+            <img
+              src={`/portfolio${profile.photo}`}
+              alt={profile.name}
+              class="w-full h-full object-cover"
+            />
+          ) : (
+            <span class="text-xs">Photo</span>
+          )}
+        </div>
+      </div>
+
+      <!-- Info table -->
+      <div class="flex-1">
+        <table class="w-full text-sm border-collapse">
+          <tbody>
+            {profile.birthday && (
+              <tr class="border-b border-stone-200">
+                <td class="py-1.5 text-stone-400 w-24 align-top">生年月日</td>
+                <td class="py-1.5 text-stone-800">{profile.birthday}</td>
+              </tr>
+            )}
+            {profile.birthplace && (
+              <tr class="border-b border-stone-200">
+                <td class="py-1.5 text-stone-400 w-24 align-top">出身</td>
+                <td class="py-1.5 text-stone-800">{profile.birthplace}</td>
+              </tr>
+            )}
+            {profile.height && (
+              <tr class="border-b border-stone-200">
+                <td class="py-1.5 text-stone-400 w-24 align-top">身長</td>
+                <td class="py-1.5 text-stone-800">{profile.height}</td>
+              </tr>
+            )}
+            {profile.bloodType && (
+              <tr class="border-b border-stone-200">
+                <td class="py-1.5 text-stone-400 w-24 align-top">血液型</td>
+                <td class="py-1.5 text-stone-800">{profile.bloodType}</td>
+              </tr>
+            )}
+            {profile.skills && profile.skills.length > 0 && (
+              <tr class="border-b border-stone-200">
+                <td class="py-1.5 text-stone-400 w-24 align-top">特技</td>
+                <td class="py-1.5 text-stone-800">{profile.skills.join('、')}</td>
+              </tr>
+            )}
+            {profile.qualifications && profile.qualifications.length > 0 && (
+              <tr class="border-b border-stone-200">
+                <td class="py-1.5 text-stone-400 w-24 align-top">資格</td>
+                <td class="py-1.5 text-stone-800">{profile.qualifications.join('、')}</td>
+              </tr>
+            )}
+            {profile.hobbies && profile.hobbies.length > 0 && (
+              <tr class="border-b border-stone-200">
+                <td class="py-1.5 text-stone-400 w-24 align-top">趣味</td>
+                <td class="py-1.5 text-stone-800">{profile.hobbies.join('、')}</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Works section -->
+    <div id="works-section">
+      <h2 class="text-lg font-bold text-stone-800 border-b-2 border-stone-800 pb-1 mb-4">
+        出演実績
+        <label class="no-print inline-flex items-center ml-3 text-xs font-normal text-stone-500 cursor-pointer align-middle">
+          <input type="checkbox" checked data-select-all="works" class="mr-1 accent-stone-600" />
+          全選択
+        </label>
+      </h2>
+
+      {categoryOrder
+        .filter((cat) => worksByCategory[cat])
+        .map((cat) => (
+          <div class="mb-4" data-category={cat}>
+            <h3 class="text-sm font-bold text-stone-600 mb-2">
+              {categoryLabels[cat]}
+              <label class="no-print inline-flex items-center ml-2 text-xs font-normal text-stone-400 cursor-pointer align-middle">
+                <input type="checkbox" checked data-select-category={cat} class="mr-1 accent-stone-600" />
+                全選択
+              </label>
+            </h3>
+            <table class="w-full text-sm border-collapse mb-2">
+              <tbody>
+                {worksByCategory[cat]
+                  .sort((a, b) => b.year - a.year)
+                  .map((work, i) => (
+                    <tr class="border-b border-stone-100" data-work-category={cat}>
+                      <td class="py-1 w-6 no-print align-top">
+                        <input type="checkbox" checked data-work-item class="accent-stone-600 cursor-pointer" />
+                      </td>
+                      <td class="py-1 text-stone-400 w-14 align-top">{work.year}</td>
+                      <td class="py-1 text-stone-800">{work.title}</td>
+                      <td class="py-1 text-stone-600 text-right">{work.role}</td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </div>
+        ))}
+    </div>
+  </div>
+
+  <!-- Page 2: Gallery -->
+  <div id="gallery-section" class="print-page-break max-w-[210mm] mx-auto px-6 py-8 print:max-w-none print:px-0 print:py-0">
+    <h2 class="text-lg font-bold text-stone-800 border-b-2 border-stone-800 pb-1 mb-6">
+      ギャラリー
+      <label class="no-print inline-flex items-center ml-3 text-xs font-normal text-stone-500 cursor-pointer align-middle">
+        <input type="checkbox" checked data-select-all="gallery" class="mr-1 accent-stone-600" />
+        全選択
+      </label>
+    </h2>
+
+    <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 print:grid-cols-3">
+      {allImages.map((image) => (
+        <div data-gallery-item class="relative">
+          <label class="no-print absolute top-1 left-1 z-10 bg-white/80 rounded px-1 cursor-pointer">
+            <input type="checkbox" checked data-gallery-check class="accent-stone-600" />
+          </label>
+          <div class="aspect-[3/4] bg-stone-200 flex items-center justify-center text-stone-400">
+            <img
+              src={`/portfolio${image.src}`}
+              alt={image.alt}
+              class="w-full h-full object-cover"
+            />
+          </div>
+          {image.category && (
+            <p class="text-xs text-stone-400 mt-1">{image.category}</p>
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <script>
+    function initPrintSelectors() {
+      // --- Works: individual item toggle ---
+      document.querySelectorAll<HTMLInputElement>('[data-work-item]').forEach((cb) => {
+        cb.addEventListener('change', () => {
+          const tr = cb.closest('tr') as HTMLElement;
+          if (!tr) return;
+          tr.classList.toggle('excluded', !cb.checked);
+          syncCategoryCheckbox(tr.getAttribute('data-work-category')!);
+          syncWorksAllCheckbox();
+        });
+      });
+
+      // --- Works: category toggle ---
+      document.querySelectorAll<HTMLInputElement>('[data-select-category]').forEach((cb) => {
+        cb.addEventListener('change', () => {
+          const cat = cb.getAttribute('data-select-category')!;
+          document.querySelectorAll<HTMLInputElement>(
+            `tr[data-work-category="${cat}"] [data-work-item]`
+          ).forEach((item) => {
+            item.checked = cb.checked;
+            item.dispatchEvent(new Event('change'));
+          });
+        });
+      });
+
+      // --- Works: section-level toggle ---
+      const worksAllCb = document.querySelector<HTMLInputElement>('[data-select-all="works"]');
+      worksAllCb?.addEventListener('change', () => {
+        document.querySelectorAll<HTMLInputElement>('[data-select-category]').forEach((catCb) => {
+          catCb.checked = worksAllCb.checked;
+          catCb.dispatchEvent(new Event('change'));
+        });
+      });
+
+      // --- Gallery: individual item toggle ---
+      document.querySelectorAll<HTMLInputElement>('[data-gallery-check]').forEach((cb) => {
+        cb.addEventListener('change', () => {
+          const item = cb.closest('[data-gallery-item]') as HTMLElement;
+          if (!item) return;
+          item.classList.toggle('excluded', !cb.checked);
+          syncGalleryAllCheckbox();
+          syncGalleryPageVisibility();
+        });
+      });
+
+      // --- Gallery: section-level toggle ---
+      const galleryAllCb = document.querySelector<HTMLInputElement>('[data-select-all="gallery"]');
+      galleryAllCb?.addEventListener('change', () => {
+        document.querySelectorAll<HTMLInputElement>('[data-gallery-check]').forEach((item) => {
+          item.checked = galleryAllCb.checked;
+          item.dispatchEvent(new Event('change'));
+        });
+      });
+
+      // --- Sync helpers ---
+      function syncCategoryCheckbox(cat: string) {
+        const items = document.querySelectorAll<HTMLInputElement>(
+          `tr[data-work-category="${cat}"] [data-work-item]`
+        );
+        const catCb = document.querySelector<HTMLInputElement>(`[data-select-category="${cat}"]`);
+        if (!catCb) return;
+        catCb.checked = Array.from(items).every((i) => i.checked);
+        // Hide category heading in print when all items unchecked
+        const catDiv = catCb.closest('[data-category]') as HTMLElement;
+        if (catDiv) {
+          const anyChecked = Array.from(items).some((i) => i.checked);
+          catDiv.querySelector('h3')?.classList.toggle('print-hidden', !anyChecked);
+          catDiv.querySelector('table')?.classList.toggle('print-hidden', !anyChecked);
+        }
+      }
+
+      function syncWorksAllCheckbox() {
+        const allCb = document.querySelector<HTMLInputElement>('[data-select-all="works"]');
+        if (!allCb) return;
+        const allItems = document.querySelectorAll<HTMLInputElement>('[data-work-item]');
+        allCb.checked = Array.from(allItems).every((i) => i.checked);
+      }
+
+      function syncGalleryAllCheckbox() {
+        const allCb = document.querySelector<HTMLInputElement>('[data-select-all="gallery"]');
+        if (!allCb) return;
+        const allItems = document.querySelectorAll<HTMLInputElement>('[data-gallery-check]');
+        allCb.checked = Array.from(allItems).every((i) => i.checked);
+      }
+
+      function syncGalleryPageVisibility() {
+        const section = document.getElementById('gallery-section');
+        if (!section) return;
+        const anyChecked = Array.from(
+          document.querySelectorAll<HTMLInputElement>('[data-gallery-check]')
+        ).some((i) => i.checked);
+        section.classList.toggle('print-hidden', !anyChecked);
+      }
+    }
+
+    initPrintSelectors();
+  </script>
+</PrintLayout>

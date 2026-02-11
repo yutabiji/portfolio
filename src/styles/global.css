@@ -1,1 +1,32 @@
 @import "tailwindcss";
+
+@page {
+  size: A4;
+  margin: 12mm 15mm;
+}
+
+/* Screen: dim excluded items so user can still see/toggle them */
+.excluded {
+  opacity: 0.3;
+}
+
+@media print {
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  /* Hide excluded items and print-hidden sections in print */
+  .excluded,
+  .print-hidden {
+    display: none !important;
+  }
+
+  .print-page-break {
+    page-break-before: always;
+  }
+}
