@@ -1,33 +1,17 @@
 ---
-name: "山田 太郎"
-nameEn: "Taro Yamada"
-birthday: "1995年4月15日"
-birthplace: "東京都"
-height: "175cm"
-bloodType: "O型"
-agency: "サンプル芸能事務所"
-agencyUrl: "https://example.com"
+name: "長谷川 愛美"
+nameEn: "MANAMI HASEGAWA"
+birthday: "1994年1月19日"
+birthplace: "大阪府枚方市（現在は東京在住）"
+height: "158cm"
+sizes: "B79 / W56 / H85 / 靴24cm / S(5号)"
 skills:
-  - "アクション"
-  - "乗馬"
-  - "英会話"
-  - "剣道（二段）"
-qualifications:
-  - "普通自動車免許"
-  - "英検2級"
+  - "速読（30分で300ページ読了）"
 hobbies:
-  - "筋トレ"
-  - "映画鑑賞"
-  - "料理"
+  - "読書（志賀直哉、三島由紀夫、古事記）"
+  - "寺社巡り"
 photo: "/images/profile.jpg"
 sns:
-  twitter: "https://twitter.com/example"
-  instagram: "https://instagram.com/example"
+  twitter: "https://x.com/miiii0119i"
+  instagram: "https://www.instagram.com/"
 ---
-
-幼少期より演技に興味を持ち、高校卒業後に本格的に俳優活動を開始。
-
-映像作品を中心に、舞台やCMなど幅広く活動しています。
-「観る人の心に残る芝居」をモットーに、一つひとつの役に全力で向き合っています。
-
-近年は映画やドラマでの出演が増え、アクションシーンにも定評があります。

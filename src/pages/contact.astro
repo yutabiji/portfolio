@@ -14,7 +14,7 @@ const sns = profile?.sns;
 
     <div class="bg-white border border-stone-200 p-8 md:p-12">
       <p class="text-stone-600 leading-relaxed mb-8">
-        出演依頼・取材・その他お問い合わせは、所属事務所までご連絡ください。
+        出演依頼・取材・その他お問い合わせは、SNSよりご連絡ください。
       </p>
 
       {profile?.agency && (
@@ -36,7 +36,6 @@ const sns = profile?.sns;
 
       {sns && (
         <div>
-          <h3 class="font-bold text-stone-900 mb-4">SNS</h3>
           <div class="flex flex-wrap gap-4">
             {sns.twitter && (
               <a

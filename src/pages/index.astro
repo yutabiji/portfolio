@@ -4,6 +4,9 @@ import { getCollection } from 'astro:content';
 
 const worksData = await getCollection('works');
 const recentWorks = worksData[0]?.data.works.slice(0, 3) ?? [];
+
+const profileEntries = await getCollection('profile');
+const profile = profileEntries[0]?.data;
 ---
 
 <BaseLayout title="Home">
@@ -12,11 +15,10 @@ const recentWorks = worksData[0]?.data.works.slice(0, 3) ?? [];
     <div class="absolute inset-0 bg-gradient-to-b from-stone-900/70 to-stone-900/90"></div>
     <div class="relative max-w-5xl mx-auto px-4 py-32 md:py-48 text-center">
       <p class="text-sm tracking-[0.3em] uppercase text-stone-300 mb-4">Actor</p>
-      <h1 class="text-5xl md:text-7xl font-bold tracking-wider mb-6">Taro Yamada</h1>
-      <p class="text-lg text-stone-300 mb-4">山田 太郎</p>
+      <h1 class="text-5xl md:text-7xl font-bold tracking-wider mb-6">{profile?.nameEn ?? profile?.name}</h1>
+      <p class="text-lg text-stone-300 mb-4">{profile?.name}</p>
       <p class="text-stone-400 max-w-lg mx-auto leading-relaxed">
-        映像・舞台を中心に活動する俳優。<br />
-        観る人の心に残る芝居をモットーに。
+        映画・ドラマ・CMを中心に活動する女優。
       </p>
       <div class="mt-10 flex gap-4 justify-center">
         <a
@@ -48,8 +50,17 @@ const recentWorks = worksData[0]?.data.works.slice(0, 3) ?? [];
           <span class="text-xs font-semibold tracking-wider uppercase text-stone-400">
             {work.category}
           </span>
-          <h3 class="mt-2 text-lg font-bold text-stone-900">{work.title}</h3>
-          <p class="mt-1 text-sm text-stone-600">{work.role}</p>
+          <h3 class="mt-2 text-lg font-bold text-stone-900">
+            {work.url ? (
+              <a href={work.url} target="_blank" rel="noopener noreferrer" class="underline decoration-stone-300 underline-offset-2 hover:decoration-stone-600 transition-colors">
+                {work.title}
+                <svg class="inline w-3.5 h-3.5 ml-1 text-stone-400" viewBox="0 0 20 20" fill="currentColor"><path d="M4.5 5.653c0-1.427 1.529-2.33 2.779-1.643l11.54 6.347c1.295.712 1.295 2.573 0 3.286L7.28 19.99c-1.25.687-2.779-.217-2.779-1.643V5.653Z" /></svg>
+              </a>
+            ) : (
+              work.title
+            )}
+          </h3>
+          {work.role && <p class="mt-1 text-sm text-stone-600">{work.role}</p>}
           <p class="mt-2 text-xs text-stone-400">{work.year}</p>
         </div>
       ))}

@@ -56,8 +56,17 @@ const sortedYears = Object.keys(worksByYear)
                   {work.category}
                 </span>
                 <div>
-                  <h4 class="font-bold text-stone-900">{work.title}</h4>
-                  <p class="text-sm text-stone-600 mt-1">{work.role}</p>
+                  <h4 class="font-bold text-stone-900">
+                    {work.url ? (
+                      <a href={work.url} target="_blank" rel="noopener noreferrer" class="underline decoration-stone-300 underline-offset-2 hover:decoration-stone-600 transition-colors">
+                        {work.title}
+                        <svg class="inline w-3.5 h-3.5 ml-1 text-stone-400" viewBox="0 0 20 20" fill="currentColor"><path d="M4.5 5.653c0-1.427 1.529-2.33 2.779-1.643l11.54 6.347c1.295.712 1.295 2.573 0 3.286L7.28 19.99c-1.25.687-2.779-.217-2.779-1.643V5.653Z" /></svg>
+                      </a>
+                    ) : (
+                      work.title
+                    )}
+                  </h4>
+                  {work.role && <p class="text-sm text-stone-600 mt-1">{work.role}</p>}
                   {work.director && (
                     <p class="text-xs text-stone-400 mt-1">演出：{work.director}</p>
                   )}

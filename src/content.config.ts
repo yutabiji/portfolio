@@ -7,23 +7,11 @@ const works = defineCollection({
       z.object({
         title: z.string(),
         year: z.number(),
-        role: z.string(),
+        role: z.string().optional(),
         category: z.enum(['Movie', 'TV', 'Stage', 'CM', 'Other']),
         director: z.string().optional(),
+        url: z.string().optional(),
         note: z.string().optional(),
-      })
-    ),
-  }),
-});
-
-const gallery = defineCollection({
-  type: 'data',
-  schema: z.object({
-    images: z.array(
-      z.object({
-        src: z.string(),
-        alt: z.string(),
-        category: z.string().optional(),
       })
     ),
   }),
@@ -37,6 +25,7 @@ const profile = defineCollection({
     birthday: z.string().optional(),
     birthplace: z.string().optional(),
     height: z.string().optional(),
+    sizes: z.string().optional(),
     bloodType: z.string().optional(),
     agency: z.string().optional(),
     agencyUrl: z.string().optional(),
@@ -55,4 +44,4 @@ const profile = defineCollection({
   }),
 });
 
-export const collections = { works, gallery, profile };
+export const collections = { works, profile };

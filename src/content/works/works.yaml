@@ -1,32 +1,113 @@
 works:
-  - title: "映画「青空の向こう側」"
-    year: 2025
-    role: "主演：佐藤 翼 役"
+  # 映画
+  - title: "映画『FUJIKO』"
+    year: 2026
+    role: "市役所職員 役"
     category: "Movie"
-    director: "田中 一郎"
-  - title: "ドラマ「夜明けのカフェ」"
+    director: "木村太一"
+  - title: "岐阜怪獣映画『アユラ』"
     year: 2025
-    role: "準主演：高橋 蓮 役"
-    category: "TV"
-  - title: "舞台「夏の夜の夢」"
-    year: 2024
-    role: "パック 役"
-    category: "Stage"
-    director: "鈴木 花子"
-  - title: "映画「風の記憶」"
-    year: 2024
-    role: "木村 大地 役"
+    role: "切通京子 役"
     category: "Movie"
-  - title: "ドラマ「街角のメロディ」"
+  - title: "映画『ヒーローたちの唄』"
+    year: 2024
+    role: "コンドル伯爵 役"
+    category: "Movie"
+    director: "坂部敬史"
+  - title: "映画『温泉シャーク』"
+    year: 2024
+    role: "岩崎 役"
+    category: "Movie"
+    director: "井上森人"
+    url: https://hotspringshark.com/
+  - title: "映画『アトのセカイ』"
     year: 2023
-    role: "ゲスト：中村 光 役"
-    category: "TV"
-  - title: "CM「サンライズビール」"
-    year: 2023
-    role: "出演"
-    category: "CM"
-  - title: "舞台「ロミオとジュリエット」"
+    role: "石井由美 役"
+    category: "Movie"
+    director: "天野裕充"
+  - title: "映画『私だってするんです』"
     year: 2022
-    role: "ロミオ 役"
-    category: "Stage"
-    director: "佐々木 誠"
+    role: "中村広子 役"
+    category: "Movie"
+    director: "荒木憲司"
+  - title: "映画『腰の痛さを知る人よ』"
+    year: 2021
+    role: "主演：ユイ 役"
+    category: "Movie"
+    director: "高島優毅"
+  - title: "映画『はなればなれに』"
+    year: 2020
+    role: "主演"
+    category: "Movie"
+    director: "平田雄己"
+
+  # テレビ・配信ドラマ
+  - title: "TBS『フェイクマミー』"
+    year: 2025
+    role: "久野七緒 役（母親レギュラー）"
+    category: "TV"
+  - title: "海外ドラマ『AMURA』(kion)"
+    year: 2024
+    role: "ケイコ 役"
+    category: "TV"
+  - title: "フレックスTV『ドS社長と死にゆく奥様の百日戦争』"
+    year: 2023
+    role: "主演"
+    category: "TV"
+
+  # CM・広告
+  - title: "ゼリア新薬「ハイゼリーFE」"
+    year: 2025
+    category: "CM"
+  - title: "Four Points flex"
+    year: 2025
+    category: "CM"
+  - title: "Pochi「ベーシック」編"
+    year: 2025
+    role: "母親 役"
+    category: "CM"
+  - title: "京王調布トリエ"
+    year: 2025
+    category: "CM"
+  - title: "星野建設「回帰」"
+    year: 2024
+    category: "CM"
+  - title: "さわかみ投信"
+    year: 2024
+    role: "同僚 役"
+    category: "CM"
+  - title: "アガマツ「アンパンマン農園」"
+    year: 2024
+    role: "母親 役"
+    category: "CM"
+  - title: "東日本地所 / 花王リセッシュ"
+    year: 2024
+    role: "母親 役"
+    category: "CM"
+  - title: "サンスター文具「metacil」"
+    year: 2023
+    role: "母親 役"
+    category: "CM"
+  - title: "ゼリア新薬「ハイゼリー顆粒EX」"
+    year: 2023
+    category: "CM"
+  - title: "静岡銀行"
+    year: 2023
+    category: "CM"
+  - title: "ほけんのぜんぶ"
+    year: 2023
+    category: "CM"
+  - title: "グノシー"
+    year: 2023
+    category: "CM"
+  - title: "Tinder「一瞬で青春」"
+    year: 2022
+    role: "主演"
+    category: "CM"
+  - title: "栃木県PR動画「真岡エンパシー」"
+    year: 2022
+    role: "彩乃 役"
+    category: "CM"
+  - title: "JCB「scoop! JCB」"
+    year: 2022
+    category: "CM"

@@ -1,10 +1,17 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SectionTitle from '../components/SectionTitle.astro';
-import { getCollection } from 'astro:content';
+import fs from 'node:fs';
+import path from 'node:path';
 
-const galleryData = await getCollection('gallery');
-const images = galleryData[0]?.data.images ?? [];
+const galleryDir = path.join(process.cwd(), 'public/images/gallery');
+const exts = new Set(['.jpg', '.jpeg', '.png', '.webp']);
+const images = fs.existsSync(galleryDir)
+  ? fs.readdirSync(galleryDir)
+      .filter((f) => exts.has(path.extname(f).toLowerCase()))
+      .sort()
+      .map((f) => `/images/gallery/${f}`)
+  : [];
 ---
 
 <BaseLayout title="Gallery" description="ギャラリー・宣材写真">
@@ -13,20 +20,14 @@ const images = galleryData[0]?.data.images ?? [];
 
     {images.length > 0 ? (
       <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-        {images.map((image) => (
-          <div class="group relative aspect-square bg-stone-200 overflow-hidden cursor-pointer">
+        {images.map((src) => (
+          <div class="h-64 md:h-80 bg-stone-100 flex items-center justify-center cursor-pointer" data-lightbox-trigger>
             <img
-              src={`/portfolio${image.src}`}
-              alt={image.alt}
-              class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+              src={`/portfolio${src}`}
+              alt=""
+              class="max-w-full max-h-full object-contain"
               loading="lazy"
             />
-            <div class="absolute inset-0 bg-stone-900/0 group-hover:bg-stone-900/40 transition-colors flex items-end">
-              <div class="p-4 text-white opacity-0 group-hover:opacity-100 transition-opacity">
-                <p class="text-sm font-semibold">{image.alt}</p>
-                {image.category && <p class="text-xs text-stone-300">{image.category}</p>}
-              </div>
-            </div>
           </div>
         ))}
       </div>
@@ -36,4 +37,37 @@ const images = galleryData[0]?.data.images ?? [];
       </div>
     )}
   </section>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 cursor-pointer">
+    <img id="lightbox-img" src="" alt="" class="max-w-[90vw] max-h-[90vh] object-contain" />
+  </div>
+
+  <script>
+    const lightbox = document.getElementById('lightbox')!;
+    const lightboxImg = document.getElementById('lightbox-img') as HTMLImageElement;
+
+    document.querySelectorAll('[data-lightbox-trigger]').forEach((el) => {
+      el.addEventListener('click', () => {
+        const img = el.querySelector('img');
+        if (!img) return;
+        lightboxImg.src = img.src;
+        lightboxImg.alt = img.alt;
+        lightbox.classList.remove('hidden');
+        lightbox.classList.add('flex');
+      });
+    });
+
+    lightbox.addEventListener('click', () => {
+      lightbox.classList.add('hidden');
+      lightbox.classList.remove('flex');
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !lightbox.classList.contains('hidden')) {
+        lightbox.classList.add('hidden');
+        lightbox.classList.remove('flex');
+      }
+    });
+  </script>
 </BaseLayout>
