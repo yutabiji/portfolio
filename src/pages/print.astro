@@ -44,7 +44,7 @@ const worksByCategory = allWorks.reduce<Record<string, typeof allWorks>>((acc, w
       id="pdf-btn"
       class="px-6 py-3 bg-stone-900 text-white text-sm font-semibold tracking-wider hover:bg-stone-700 transition-colors shadow-lg cursor-pointer"
     >
-      PDF出力
+      PDF
     </button>
     <a
       href="/portfolio/profile/"
@@ -60,7 +60,7 @@ const worksByCategory = allWorks.reduce<Record<string, typeof allWorks>>((acc, w
       <!-- Profile section -->
       <div class="flex gap-6 mb-4 h-[91mm]">
         <!-- Photo -->
-        <div class="shrink-0 w-[60mm] h-full">
+        <div class="shrink-0 w-48 h-full">
           <div class="bg-stone-200 flex items-center justify-center text-stone-400 h-full overflow-hidden">
             {profile.photo ? (
               <img
