@@ -10,6 +10,7 @@ skills:
 hobbies:
   - "読書（志賀直哉、三島由紀夫、古事記）"
   - "寺社巡り"
+  - "麻雀"
 photo: "/images/profile.jpg"
 sns:
   twitter: "https://x.com/miiii0119i"

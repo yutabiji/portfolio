@@ -55,20 +55,12 @@ const worksByCategory = allWorks.reduce<Record<string, typeof allWorks>>((acc, w
   </div>
 
   <!-- Page 1: Profile + Works -->
-  <div class="max-w-[210mm] mx-auto px-6 py-8 print:max-w-none print:px-0 print:py-0">
-    <!-- Header -->
-    <div class="flex justify-between items-baseline border-b-2 border-stone-800 pb-3 mb-6">
-      <h1 class="text-2xl font-bold tracking-wide">{profile.name}</h1>
-      {profile.agency && (
-        <span class="text-sm text-stone-500">{profile.agency}</span>
-      )}
-    </div>
-
+  <div class="max-w-[210mm] mx-auto px-6 py-8 print:max-w-none print:px-[15mm] print:py-[12mm]">
     <!-- Profile section -->
-    <div class="flex gap-6 mb-8">
+    <div class="flex gap-6 mb-4 print:h-[91mm]">
       <!-- Photo -->
-      <div class="shrink-0 w-36">
-        <div class="aspect-[3/4] bg-stone-200 flex items-center justify-center text-stone-400">
+      <div class="shrink-0 w-36 print:w-auto print:h-full">
+        <div class="aspect-[3/4] print:aspect-auto bg-stone-200 flex items-center justify-center text-stone-400 print:h-full">
           {profile.photo ? (
             <img
               src={`/portfolio${profile.photo}`}
@@ -83,7 +75,11 @@ const worksByCategory = allWorks.reduce<Record<string, typeof allWorks>>((acc, w
 
       <!-- Info table -->
       <div class="flex-1">
-        <table class="w-full text-sm border-collapse">
+        <h2 class="text-2xl font-bold text-stone-900 leading-tight text-center">{profile.name}</h2>
+        {profile.nameEn && (
+          <p class="text-sm text-stone-400 tracking-wider mb-3 text-center">{profile.nameEn}</p>
+        )}
+        <table class="mx-auto text-sm border-collapse">
           <tbody>
             {profile.birthday && (
               <tr class="border-b border-stone-200">
@@ -140,7 +136,7 @@ const worksByCategory = allWorks.reduce<Record<string, typeof allWorks>>((acc, w
 
     <!-- Works section -->
     <div id="works-section">
-      <h2 class="text-lg font-bold text-stone-800 border-b-2 border-stone-800 pb-1 mb-4">
+      <h2 class="text-sm font-bold text-stone-800 border-b-2 border-stone-800 pb-1 mb-2">
         出演実績
         <label class="no-print inline-flex items-center ml-3 text-xs font-normal text-stone-500 cursor-pointer align-middle">
           <input type="checkbox" checked data-select-all="works" class="mr-1 accent-stone-600" />
@@ -151,26 +147,26 @@ const worksByCategory = allWorks.reduce<Record<string, typeof allWorks>>((acc, w
       {categoryOrder
         .filter((cat) => worksByCategory[cat])
         .map((cat) => (
-          <div class="mb-4" data-category={cat}>
-            <h3 class="text-sm font-bold text-stone-600 mb-2">
+          <div class="mb-2" data-category={cat}>
+            <h3 class="text-xs font-bold text-stone-600 mb-1 print:text-[11px]">
               {categoryLabels[cat]}
               <label class="no-print inline-flex items-center ml-2 text-xs font-normal text-stone-400 cursor-pointer align-middle">
                 <input type="checkbox" checked data-select-category={cat} class="mr-1 accent-stone-600" />
                 全選択
               </label>
             </h3>
-            <table class="w-full text-sm border-collapse mb-2">
+            <table class="w-full text-xs border-collapse mb-1 print:text-[10px]">
               <tbody>
                 {worksByCategory[cat]
                   .sort((a, b) => b.year - a.year)
                   .map((work, i) => (
                     <tr class="border-b border-stone-100" data-work-category={cat}>
-                      <td class="py-1 w-6 no-print align-top">
+                      <td class="py-0.5 w-6 no-print align-top">
                         <input type="checkbox" checked data-work-item class="accent-stone-600 cursor-pointer" />
                       </td>
-                      <td class="py-1 text-stone-400 w-14 align-top">{work.year}</td>
-                      <td class="py-1 text-stone-800">{work.title}</td>
-                      <td class="py-1 text-stone-600 text-right">{work.role ?? ''}</td>
+                      <td class="py-0.5 text-stone-400 w-12 align-top">{work.year}</td>
+                      <td class="py-0.5 text-stone-800">{work.title}</td>
+                      <td class="py-0.5 text-stone-600 text-right">{work.role ?? ''}</td>
                     </tr>
                   ))}
               </tbody>
@@ -181,7 +177,7 @@ const worksByCategory = allWorks.reduce<Record<string, typeof allWorks>>((acc, w
   </div>
 
   <!-- Page 2: Gallery -->
-  <div id="gallery-section" class="print-page-break max-w-[210mm] mx-auto px-6 py-8 print:max-w-none print:px-0 print:py-0">
+  <div id="gallery-section" class="print-page-break max-w-[210mm] mx-auto px-6 py-8 print:max-w-none print:px-[15mm] print:py-[12mm]">
     <h2 class="text-lg font-bold text-stone-800 border-b-2 border-stone-800 pb-1 mb-6">
       ギャラリー
       <label class="no-print inline-flex items-center ml-3 text-xs font-normal text-stone-500 cursor-pointer align-middle">
@@ -190,13 +186,13 @@ const worksByCategory = allWorks.reduce<Record<string, typeof allWorks>>((acc, w
       </label>
     </h2>
 
-    <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 print:grid-cols-3">
+    <div class="grid grid-cols-2 gap-3 sm:grid-cols-4 print:grid-cols-4">
       {allImages.map((src) => (
         <div data-gallery-item class="relative">
           <label class="no-print absolute top-1 left-1 z-10 bg-white/80 rounded px-1 cursor-pointer">
             <input type="checkbox" checked data-gallery-check class="accent-stone-600" />
           </label>
-          <div class="h-56 print:h-48 bg-stone-100 flex items-center justify-center">
+          <div class="h-56 print:h-40 bg-stone-100 flex items-center justify-center">
             <img
               src={`/portfolio${src}`}
               alt=""
