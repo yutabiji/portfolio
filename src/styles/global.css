@@ -11,7 +11,12 @@
 }
 
 @media print {
+  html {
+    width: 210mm;
+  }
+
   body {
+    width: 210mm;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
