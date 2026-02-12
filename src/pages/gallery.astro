@@ -23,7 +23,7 @@ const images = fs.existsSync(galleryDir)
         {images.map((src) => (
           <div class="h-64 md:h-80 bg-stone-100 flex items-center justify-center cursor-pointer" data-lightbox-trigger>
             <img
-              src={`/portfolio${src}`}
+              src={`${src}`}
               alt=""
               class="max-w-full max-h-full object-contain"
               loading="lazy"

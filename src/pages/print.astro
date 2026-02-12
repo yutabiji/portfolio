@@ -47,7 +47,7 @@ const worksByCategory = allWorks.reduce<Record<string, typeof allWorks>>((acc, w
       PDF
     </button>
     <a
-      href="/portfolio/profile/"
+      href="/profile/"
       class="px-6 py-3 bg-white text-stone-600 text-sm font-semibold tracking-wider border border-stone-300 hover:border-stone-900 hover:text-stone-900 transition-colors shadow-lg"
     >
       戻る
@@ -63,7 +63,7 @@ const worksByCategory = allWorks.reduce<Record<string, typeof allWorks>>((acc, w
         <div class="shrink-0 w-[192px] h-[344px] overflow-hidden relative">
           {profile.photo ? (
             <img
-              src={`/portfolio${profile.photo}`}
+              src={`${profile.photo}`}
               alt={profile.name}
               class="absolute inset-0 w-full h-full object-cover"
               style="min-width: 192px; min-height: 344px;"
@@ -196,7 +196,7 @@ const worksByCategory = allWorks.reduce<Record<string, typeof allWorks>>((acc, w
             </label>
             <div class="h-40 bg-stone-100 flex items-center justify-center">
               <img
-                src={`/portfolio${src}`}
+                src={`${src}`}
                 alt=""
                 class="max-w-full max-h-full object-contain"
               />
