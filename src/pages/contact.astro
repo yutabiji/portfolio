@@ -13,7 +13,7 @@ const sns = profile?.sns;
     <SectionTitle title="Contact" subtitle="お問い合わせ" />
 
     <div class="bg-white border border-stone-200 p-8 md:p-12">
-      <p class="text-stone-600 leading-relaxed mb-8">
+      <p class="text-stone-600 leading-relaxed mb-8 text-center">
         出演依頼・取材・その他お問い合わせは、SNSよりご連絡ください。
       </p>
 
@@ -36,7 +36,7 @@ const sns = profile?.sns;
 
       {sns && (
         <div>
-          <div class="flex flex-wrap gap-4">
+          <div class="flex flex-wrap gap-4 justify-center">
             {sns.twitter && (
               <a
                 href={sns.twitter}
