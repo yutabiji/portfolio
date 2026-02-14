@@ -12,27 +12,26 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: true # 新しいプッシュがあったら古い実行を止める
+  cancel-in-progress: true
 
 jobs:
-  deploy: # ジョブを1つに統合
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
         with:
-          node-version: 20
-          cache: 'npm'
+          bun-version: latest # または特定のバージョンを指定
 
       - name: Install dependencies
-        # --prefer-offline と --no-audit でネットワーク通信と解析をスキップ
-        run: npm ci --prefer-offline --no-audit
+        # bun install はデフォルトで非常に高速です
+        run: bun install --frozen-lockfile
 
       - name: Build
-        run: npm run build
+        run: bun run build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
