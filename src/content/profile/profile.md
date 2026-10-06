@@ -14,5 +14,5 @@ hobbies:
 photo: "/images/profile.jpg"
 sns:
   twitter: "https://x.com/miiii0119i"
-  instagram: "https://www.instagram.com/manami_hasegawa_"
+  instagram: "https://www.instagram.com/manami_hasegawa_?stkn=MTNhbXJyMzljMWZnMA=="
 ---
