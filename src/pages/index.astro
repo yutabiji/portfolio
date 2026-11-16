@@ -58,6 +58,7 @@ const profile = profileEntries[0]?.data;
             )}
           </h3>
           {work.role && <p class="mt-1 text-sm text-stone-600">{work.role}</p>}
+          {work.note && <p class="mt-1 text-xs text-stone-500">{work.note}</p>}
           <p class="mt-2 text-xs text-stone-400">{work.year}</p>
         </div>
       ))}

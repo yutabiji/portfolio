@@ -31,6 +31,7 @@ const profile = defineCollection({
     agencyUrl: z.string().optional(),
     skills: z.array(z.string()).optional(),
     qualifications: z.array(z.string()).optional(),
+    awards: z.array(z.string()).optional(),
     hobbies: z.array(z.string()).optional(),
     photo: z.string().optional(),
     sns: z
