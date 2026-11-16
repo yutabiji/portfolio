@@ -1,5 +1,12 @@
 works:
   # 映画
+  - title: "映画『衣の下』"
+    year: 2026
+    role: "レイコ 役"
+    category: "Movie"
+    director: "ソフィア お蓮"
+    url: https://www.sophiaoren.com/ja/films/breaded/
+    note: "神戸インディペンデント映画祭2026 グランプリ受賞"
   - title: "映画『FUJIKO』"
     year: 2026
     role: "市役所職員 役"
